@@ -1,9 +1,5 @@
 #!/bin/bash
- 
-loadkeys ru
-setfont cyr-sun16
-timedatectl set-ntp true
- 
+
 hostname="Arch"
 username="anton"
 localname1="ru_RU.UTF-8 UTF-8"
@@ -11,6 +7,11 @@ localname2="en_US.UTF-8 UTF-8"
 languageSistem='LANG="ru_RU.UTF-8"'
 rootPass=200583
 userPass=200583
+
+loadkeys ru
+setfont cyr-sun16
+timedatectl set-ntp true
+
 echo 'Форматирование дисков'
 mkfs.ext4 -F /dev/sda1 -L root
 mkfs.ext4 -F /dev/sda2 -L home
@@ -41,7 +42,7 @@ echo 'Обновим текущую локаль системы'
 locale-gen
  
 echo 'Указываем язык системы'
-echo $localname1 > /etc/locale.conf
+echo $languageSistem > /etc/locale.conf
  
 echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
@@ -78,13 +79,13 @@ echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syy
  
 echo 'Ставим иксы и драйвера'
-pacman -S xorg-server xorg-drivers xorg-xinit xf86-input-synaptics --noconfirm
-#echo 'KDE ставим'
-#pacman -Sy plasma-meta kdebase sddm sddm-kcm --noconfirm
-#systemctl enable sddm
-echo "Ставим XFCE"
-pacman -S xfce4 xfce4-goodies lxdm --noconfirm
-systemctl enable lxdm
+pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
+echo 'KDE ставим'
+pacman -Sy plasma-meta kdebase sddm sddm-kcm --noconfirm
+systemctl enable sddm
+#echo "Ставим XFCE"
+#pacman -S xfce4 xfce4-goodies lxdm --noconfirm
+#systemctl enable lxdm
 
 echo 'Ставим шрифты'
 pacman -S ttf-liberation ttf-dejavu --noconfirm
