@@ -14,12 +14,14 @@ timedatectl set-ntp true
 
 echo 'Форматирование дисков'
 mkfs.ext4 -F /dev/sda1 -L root
-mkfs.ext4 -F /dev/sda2 -L home
+mkswap /dev/sda2 -L swap
+#mkfs.ext4 -F /dev/sda2 -L home
 #mkfs.ext4 -F /dev/sda3 -L data
 echo 'Монтирование дисков'
 mount /dev/sda1 /mnt
-mkdir /mnt/home
-mount /dev/sda2 /mnt/home
+swapon /dev/sda2
+#mkdir /mnt/home
+#mount /dev/sda2 /mnt/home
 echo 'Выбор зеркал для загрузки. Ставим зеркало от Яндекс'
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
  
