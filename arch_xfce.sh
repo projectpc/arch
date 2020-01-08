@@ -15,7 +15,7 @@ timedatectl set-ntp true
 echo 'Форматирование дисков'
 mkfs.ext4 -F /dev/sda1 -L root
 mkfs.ext4 -F /dev/sda2 -L home
-mkfs.ext4 -F /dev/sda3 -L data
+#mkfs.ext4 -F /dev/sda3 -L data
 echo 'Монтирование дисков'
 mount /dev/sda1 /mnt
 mkdir /mnt/home
