@@ -35,14 +35,14 @@ echo $hostname > /etc/hostname
 ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
  
 echo 'Добавляем локали системы'
-echo $localname1 > /etc/locale.gen
-echo $localname2 >> /etc/locale.gen
+echo "ru_RU.UTF-8 UTF-8" > /etc/locale.gen
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
  
 echo 'Обновим текущую локаль системы'
 locale-gen
  
 echo 'Указываем язык системы'
-echo $languageSistem > /etc/locale.conf
+echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
  
 echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
@@ -80,12 +80,13 @@ pacman -Syy
  
 echo 'Ставим иксы и драйвера'
 pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
-echo 'KDE ставим'
-pacman -Sy plasma-meta kdebase sddm sddm-kcm --noconfirm
-systemctl enable sddm
-#echo "Ставим XFCE"
-#pacman -S xfce4 xfce4-goodies lxdm --noconfirm
-#systemctl enable lxdm
+#echo 'KDE ставим'
+#pacman -Sy plasma-meta kdebase sddm sddm-kcm --noconfirm
+#systemctl enable sddm
+echo "Ставим XFCE"
+pacman -S xfce4 lxdm --noconfirm
+#xfce4-goodies
+systemctl enable lxdm
 
 echo 'Ставим шрифты'
 pacman -S ttf-liberation ttf-dejavu --noconfirm
