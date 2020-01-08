@@ -85,7 +85,7 @@ pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
 #echo 'KDE ставим'
 #pacman -Sy plasma-meta kdebase sddm sddm-kcm --noconfirm
 #systemctl enable sddm
-echo "Ставим XFCE"
+echo 'Ставим XFCE'
 pacman -S xfce4 lxdm --noconfirm
 #xfce4-goodies
 systemctl enable lxdm
