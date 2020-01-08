@@ -37,14 +37,14 @@ echo $hostname > /etc/hostname
 ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
  
 echo 'Добавляем локали системы'
-echo "ru_RU.UTF-8 UTF-8" > /etc/locale.gen
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+echo $localname1 > /etc/locale.gen
+echo $localname2 >> /etc/locale.gen
  
 echo 'Обновим текущую локаль системы'
 locale-gen
  
 echo 'Указываем язык системы'
-echo 'LANG="ru_RU.UTF-8"' > /etc/locale.conf
+echo $languageSistem > /etc/locale.conf
  
 echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
