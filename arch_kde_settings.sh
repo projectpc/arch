@@ -1,4 +1,4 @@
 #!/bin/bash
 
-username=$1
+username=eeeeeeeeeeee#$1
 echo  $username
