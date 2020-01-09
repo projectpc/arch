@@ -1,7 +1,9 @@
 #!/bin/bash
 
-username=$1
+username=anton#
 echo  $username
+echo  $0
+echo  $1
 ####################################################
 #            Настройка системы                     #
 ####################################################
@@ -14,9 +16,9 @@ Model=pc101
 Options=grp:alt_shift_toggle
 ResetOldOptions=true
 ShowFlag=true
-ShowLabel=true
+ShowLabel=false
 ShowLayoutIndicator=true
-ShowSingle=false
+ShowSingle=true
 SwitchMode=Global
 Use=true' > /home/$username/.config/kxkbrc"
 
