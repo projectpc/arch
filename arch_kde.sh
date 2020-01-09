@@ -38,8 +38,7 @@ pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd netctl
 echo 'Создаем fstab'
 genfstab -pU /mnt >> /mnt/etc/fstab
  
-arch-chroot /mnt 
-#sh -c "
+arch-chroot /mnt sh -c "
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname
 ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
@@ -151,5 +150,5 @@ Session=plasma.desktop' $username >/etc/sddm.conf.d/autologin.conf
 echo 'Установка завершена '
 read -p 'нажми Enter для перезагрузки'
 reboot
-#"
+"
  
