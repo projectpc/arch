@@ -107,8 +107,12 @@ read -p 'Ну че перешол ?  нажми Enter
 sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth --noconfirm
 sudo systemctl enable bluetooth
 sudo pacman -S gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mtpfs thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman udiskie udisks2 chromium
+
+####################################################
+#            Настройка системы                     #
+####################################################
 #Добавляю русский язык и смену раскладки alt->shift
-echo "[Layout]
+echo '[Layout]
 DisplayNames=,
 LayoutList=us,ru
 LayoutLoopCount=-1
@@ -120,7 +124,13 @@ ShowLabel=true
 ShowLayoutIndicator=true
 ShowSingle=false
 SwitchMode=Global
-Use=true" > /home/$username/.config/kxkbrc
+Use=true' > /home/$username/.config/kxkbrc
+
+#Авто логин
+sudo mkdir -p /etc/sddm.conf.d/
+sudo printf "[Autologin]
+User=%s
+Session=plasma.desktop" $username >/etc/sddm.conf.d/autologin.conf
 
 
 
