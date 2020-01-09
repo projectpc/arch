@@ -16,12 +16,12 @@ userPass=200583                                    #
 ####################################################
 
 #################################################################################################
-#            Разбиваю в ручную и  прописываю свою разметку                                       #
+#                       Разбиваю в ручную и  прописываю свою разметку                           #
 #################################################################################################
 echo 'Форматирование дисков'                                                                    #
 mkfs.ext4 -F /dev/sda1 -L root                                                                  #
-#mkfs.ext4 -F /dev/sda2 -L home                                                                  #
-#mkfs.ext4 -F /dev/sda3 -L data                                                                  #
+mkfs.ext4 -F /dev/sda2 -L home                                                                  #
+mkfs.ext4 -F /dev/sda3 -L data                                                                  #
 echo 'Монтирование дисков'                                                                      #
 mount /dev/sda1 /mnt                                                                            #
 mkdir /mnt/home                                                                                 #
@@ -38,7 +38,8 @@ pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd netctl
 echo 'Создаем fstab'
 genfstab -pU /mnt >> /mnt/etc/fstab
  
-arch-chroot /mnt sh -c "
+arch-chroot /mnt 
+#sh -c "
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname
 ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
@@ -107,19 +108,16 @@ systemctl enable NetworkManager
 
 pacman -S gimp  mousepad
 
-read -p 'Переход на пользователя нажми Enter'
-su $username
-read -p 'Ну че перешол ?  нажми Enter
-read -p 'ставим пакеты  нажми Enter
-sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth --noconfirm
-sudo systemctl enable bluetooth
-sudo pacman -S gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mtpfs thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman udiskie udisks2 chromium
-read -p 'Установились ?  нажми Enter
+read -p 'ДАЛЬШЕ РАБОТАЕМ ОТ ПОЛЬЗОВАТЕЛЯ   su anton -c нажми Enter'
+su anton -c 'sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth --noconfirm'
+su anton -c 'sudo systemctl enable bluetooth'
+su anton -c 'sudo pacman -S gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mtpfs thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman udiskie udisks2 chromium'
+read -p 'НАСТРОЙКА СИСТЕМЫ enter'
 ####################################################
 #            Настройка системы                     #
 ####################################################
 #Добавляю русский язык и смену раскладки alt->shift
-echo '[Layout]
+su anton -c 'echo '[Layout]
 DisplayNames=,
 LayoutList=us,ru
 LayoutLoopCount=-1
@@ -131,11 +129,11 @@ ShowLabel=true
 ShowLayoutIndicator=true
 ShowSingle=false
 SwitchMode=Global
-Use=true' > /home/$username/.config/kxkbrc
+Use=true' > /home/$username/.config/kxkbrc'
 
 #Авто логин
-sudo mkdir -p /etc/sddm.conf.d/
-sudo printf '[Autologin]
+mkdir -p /etc/sddm.conf.d/
+printf '[Autologin]
 User=%s
 Session=plasma.desktop' $username >/etc/sddm.conf.d/autologin.conf
 
@@ -153,4 +151,5 @@ Session=plasma.desktop' $username >/etc/sddm.conf.d/autologin.conf
 echo 'Установка завершена '
 read -p 'нажми Enter для перезагрузки'
 reboot
-"
+#"
+ 
