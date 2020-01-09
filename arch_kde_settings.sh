@@ -25,7 +25,7 @@ SwitchMode=Global
 Use=true' > /home/$username/.config/kxkbrc"
 
 #Авто логин
-su $username -c 'sudo  mkdir -p /etc/sddm.conf.d/'
+su $username -c "sudo  mkdir -p /etc/sddm.conf.d/"
 su $username -c "sudo printf '[Autologin]
 User=%s
 Session=plasma.desktop' $username >/etc/sddm.conf.d/autologin.conf"
