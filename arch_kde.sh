@@ -14,14 +14,14 @@ timedatectl set-ntp true
 
 echo 'Форматирование дисков'
 mkfs.ext4 -F /dev/sda1 -L root
-mkswap /dev/sda2 -L swap
-#mkfs.ext4 -F /dev/sda2 -L home
-#mkfs.ext4 -F /dev/sda3 -L data
+mkfs.ext4 -F /dev/sda2 -L home
+mkfs.ext4 -F /dev/sda3 -L data
 echo 'Монтирование дисков'
 mount /dev/sda1 /mnt
-swapon /dev/sda2
-#mkdir /mnt/home
-#mount /dev/sda2 /mnt/home
+mkdir /mnt/home
+mount /dev/sda2 /mnt/home
+mkdir /mnt/date
+mount /dev/sda3 /mnt/date
 echo 'Выбор зеркал для загрузки. Ставим зеркало от Яндекс'
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
  
@@ -83,7 +83,7 @@ pacman -Syy
 echo 'Ставим иксы и драйвера'
 pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
 echo 'KDE ставим'
-pacman -Sy plasma-meta kdebase sddm sddm-kcm --noconfirm
+pacman -Sy plasma-meta kdebase  kde-gtk-config breeze-gtk sddm sddm-kcm --noconfirm
 systemctl enable sddm
 echo 'Ставим шрифты'
 pacman -S ttf-liberation ttf-dejavu --noconfirm
