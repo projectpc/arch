@@ -1,6 +1,6 @@
 #!/bin/bash
 
-username=$1
+username=$0
 echo  "username : "
 echo  $username
 echo  "0 " $0
