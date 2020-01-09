@@ -110,11 +110,11 @@ pacman -S gimp  mousepad
 read -p 'Переход на пользователя нажми Enter'
 su $username
 read -p 'Ну че перешол ?  нажми Enter
-read -p 'Ну че перешол ?  нажми Enter
+read -p 'ставим пакеты  нажми Enter
 sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth --noconfirm
 sudo systemctl enable bluetooth
 sudo pacman -S gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mtpfs thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman udiskie udisks2 chromium
-
+read -p 'Установились ?  нажми Enter
 ####################################################
 #            Настройка системы                     #
 ####################################################
