@@ -135,9 +135,9 @@ Use=true' > /home/$username/.config/kxkbrc
 
 #Авто логин
 sudo mkdir -p /etc/sddm.conf.d/
-sudo printf "[Autologin]
+sudo printf '[Autologin]
 User=%s
-Session=plasma.desktop" $username >/etc/sddm.conf.d/autologin.conf
+Session=plasma.desktop' $username >/etc/sddm.conf.d/autologin.conf
 
 
 
