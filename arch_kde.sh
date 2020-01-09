@@ -71,9 +71,13 @@ echo $username:$userPass | chpasswd
  
 echo 'Создаем root пароль'
 echo root:$rootPass | chpasswd
- 
+
 echo 'Устанавливаем SUDO'
+echo groupadd sudo
+echo usermod -a -G sudo $username
 echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
+echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
+echo '$username ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
  
 echo 'Раскомментируем репозиторий multilib Для работы 32-битных приложений в 64-битной системе.'
 echo '[multilib]' >> /etc/pacman.conf
@@ -83,17 +87,51 @@ pacman -Syy
 echo 'Ставим иксы и драйвера'
 pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
 echo 'KDE ставим'
-pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk sddm sddm-kcm  blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth --noconfirm
+pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk sddm sddm-kcm --noconfirm
 echo 'Ставим шрифты'
 pacman -S ttf-liberation ttf-dejavu --noconfirm
  
 echo 'Ставим сеть'
 pacman -S networkmanager network-manager-applet ppp --noconfirm
-pacman -S gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mtpfs thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman udiskie udisks2 chrome
+
 echo 'Подключаем автозагрузку менеджера входа и интернет'
 systemctl enable sddm
 systemctl enable NetworkManager
-systemctl enable bluetooth
+
+pacman -S gimp  mousepad
+
+read -p 'Переход на пользователя нажми Enter'
+su $username
+read -p 'Ну че перешол ?  нажми Enter
+read -p 'Ну че перешол ?  нажми Enter
+sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth --noconfirm
+sudo systemctl enable bluetooth
+sudo pacman -S gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mtpfs thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman udiskie udisks2 chromium
+#Добавляю русский язык и смену раскладки alt->shift
+echo "[Layout]
+DisplayNames=,
+LayoutList=us,ru
+LayoutLoopCount=-1
+Model=pc101
+Options=grp:alt_shift_toggle
+ResetOldOptions=true
+ShowFlag=true
+ShowLabel=true
+ShowLayoutIndicator=true
+ShowSingle=false
+SwitchMode=Global
+Use=true" > /home/$username/.config/kxkbrc
+
+
+
+
+
+
+
+
+
+
+
 
 echo 'Установка завершена '
 read -p 'нажми Enter для перезагрузки'
