@@ -130,12 +130,12 @@ ShowSingle=false
 SwitchMode=Global
 Use=true' > /home/$username/.config/kxkbrc'
 
-#Авто логин
-mkdir -p /etc/sddm.conf.d/
-printf '[Autologin]
-User=%s
-Session=plasma.desktop' $username >/etc/sddm.conf.d/autologin.conf
 
+#Авто логин
+su anton -c 'mkdir -p /etc/sddm.conf.d/'
+su anton -c printf '[Autologin]
+User=%s
+Session=plasma.desktop' $username >/etc/sddm.conf.d/autologin.conf'
 
 
 
