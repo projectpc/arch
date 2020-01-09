@@ -83,17 +83,18 @@ pacman -Syy
 echo 'Ставим иксы и драйвера'
 pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
 echo 'KDE ставим'
-pacman -Sy plasma-meta kdebase  kde-gtk-config breeze-gtk sddm sddm-kcm --noconfirm
-systemctl enable sddm
+pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk sddm sddm-kcm  blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth --noconfirm
 echo 'Ставим шрифты'
 pacman -S ttf-liberation ttf-dejavu --noconfirm
  
 echo 'Ставим сеть'
 pacman -S networkmanager network-manager-applet ppp --noconfirm
- 
+pacman -S gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mtpfs thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman udiskie udisks2 chrome
 echo 'Подключаем автозагрузку менеджера входа и интернет'
+systemctl enable sddm
 systemctl enable NetworkManager
- 
+systemctl enable bluetooth
+
 echo 'Установка завершена '
 read -p 'нажми Enter для перезагрузки'
 reboot
