@@ -1,28 +1,35 @@
 #!/bin/bash
 
-hostname="Arch"
-username="anton"
-localname1="ru_RU.UTF-8 UTF-8"
-localname2="en_US.UTF-8 UTF-8"
-languageSistem='LANG="ru_RU.UTF-8"'
-rootPass=200583
-userPass=200583
-
 loadkeys ru
 setfont cyr-sun16
 timedatectl set-ntp true
+####################################################
+#            установка переменных                  #
+####################################################
+hostname="Arch"                                    #
+username="anton"                                   #
+localname1="ru_RU.UTF-8 UTF-8"                     #
+localname2="en_US.UTF-8 UTF-8"                     #
+languageSistem='LANG="ru_RU.UTF-8"'                #
+rootPass=200583                                    #
+userPass=200583                                    #
+####################################################
 
-echo 'Форматирование дисков'
-mkfs.ext4 -F /dev/sda1 -L root
-mkfs.ext4 -F /dev/sda2 -L home
-mkfs.ext4 -F /dev/sda3 -L data
-echo 'Монтирование дисков'
-mount /dev/sda1 /mnt
-mkdir /mnt/home
-mount /dev/sda2 /mnt/home
-mkdir /mnt/date
-mount /dev/sda3 /mnt/date
-echo 'Выбор зеркал для загрузки. Ставим зеркало от Яндекс'
+#################################################################################################
+#            Разбиваю в ручную и  прописываю свою разметку                                       #
+#################################################################################################
+echo 'Форматирование дисков'                                                                    #
+mkfs.ext4 -F /dev/sda1 -L root                                                                  #
+mkfs.ext4 -F /dev/sda2 -L home                                                                  #
+mkfs.ext4 -F /dev/sda3 -L data                                                                  #
+echo 'Монтирование дисков'                                                                      #
+mount /dev/sda1 /mnt                                                                            #
+mkdir /mnt/home                                                                                 #
+mount /dev/sda2 /mnt/home                                                                       #
+mkdir /mnt/date                                                                                 #
+mount /dev/sda3 /mnt/date                                                                       #
+#################################################################################################
+echo 'Выбор зеркал для загрузки. Ставим зеркало от Яндекс'                                      
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
  
 echo 'Установка основных пакетов'
