@@ -94,7 +94,7 @@ pacman -Syy
 echo 'Ставим иксы и драйвера'
 pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
 echo 'KDE ставим'
-pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk sddm sddm-kcm --noconfirm
+pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk  packagekit-qt5  kwalletmanager sddm sddm-kcm --noconfirm
 echo 'Ставим шрифты'
 #pacman -S ttf-liberation ttf-dejavu --noconfirm
  
