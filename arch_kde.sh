@@ -31,13 +31,15 @@ mount /dev/sda1 /mnt                                                            
 #################################################################################################
 echo 'Выбор зеркал для загрузки. Ставим зеркало от Яндекс'                                      
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
- 
+read -p 'Установка основных пакетов нажми Enteк' 
 echo 'Установка основных пакетов'
 pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd netctl
- 
+ read -p 'Установка основных пакетов ГОТОВО  -----   нажми Enteк'
 echo 'Создаем fstab'
+ read -p 'Создаем fstab нажми Enteк'
 genfstab -pU /mnt >> /mnt/etc/fstab
- 
+ read -p 'Создаем fstab  ГОТОВО нажми Enteк'
+  read -p 'arch-chroot  ГОТОВО нажми Enteк'
 arch-chroot /mnt sh -c "
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname
