@@ -19,7 +19,7 @@ userPass=200583                                    #
 #                       Разбиваю в ручную и  прописываю свою разметку                           #
 #################################################################################################
 echo 'Форматирование дисков'                                                                    #
-#mkfs.ext4 -F /dev/sda1 -L root                                                                  #
+mkfs.ext4 -F /dev/sda1 -L root                                                                  #
 #mkfs.ext4 -F /dev/sda2 -L home                                                                  #
 #mkfs.ext4 -F /dev/sda3 -L data                                                                  #
 echo 'Монтирование дисков'                                                                      #
@@ -32,7 +32,7 @@ mount /dev/sda1 /mnt                                                            
 echo 'Выбор зеркал для загрузки. Ставим зеркало от Яндекс'                                      
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 echo 'Установка основных пакетов'
-#pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd netctl
+pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd netctl
 echo 'Создаем fstab'
 genfstab -pU /mnt >> /mnt/etc/fstab
   
@@ -71,7 +71,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
  
 echo 'Ставим программу для Wi-fi'
 
-#pacman -S dialog wpa_supplicant --noconfirm
+pacman -S dialog wpa_supplicant --noconfirm
  
 echo 'Добавляем пользователя'
 useradd -m -g users -G wheel -s /bin/bash $username
@@ -92,23 +92,23 @@ echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syy
  
 echo 'Ставим иксы и драйвера'
-#pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
+pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
 echo 'KDE ставим'
-#pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk sddm sddm-kcm --noconfirm
+pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk sddm sddm-kcm --noconfirm
 echo 'Ставим шрифты'
 #pacman -S ttf-liberation ttf-dejavu --noconfirm
  
 echo 'Ставим сеть'
-#pacman -S networkmanager network-manager-applet ppp --noconfirm
+pacman -S networkmanager network-manager-applet ppp --noconfirm
 echo 'Подключаем автозагрузку менеджера входа и интернет'
+
+
+su anton -c 'sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth gimp  mousepad chromium vlc --noconfirm'
+su anton -c 'sudo pacman -S f2fs-tools dosfstools ntfs-3g p7zip unrar gvfs ark thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman --noconfirm'
+
 systemctl enable sddm
 systemctl enable NetworkManager
-#####pacman -S gimp  mousepad
-read -p 'ДАЛЬШЕ РАБОТАЕМ ОТ ПОЛЬЗОВАТЕЛЯ   su anton -c нажми Enter'
-#####su anton -c 'sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth --noconfirm'
-#####su anton -c 'sudo systemctl enable bluetooth'
-#####su anton -c 'sudo pacman -S gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mtpfs thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman udiskie udisks2 chromium'
-read -p 'НАСТРОЙКА СИСТЕМЫ enter'
+systemctl enable bluetooth
 ####################################################
 #            Настройка системы                     #
 ####################################################
@@ -122,19 +122,30 @@ Model=pc101
 Options=grp:alt_shift_toggle
 ResetOldOptions=true
 ShowFlag=true
-ShowLabel=true
+ShowLabel=false
 ShowLayoutIndicator=true
-ShowSingle=false
+ShowSingle=true
 SwitchMode=Global
 Use=true' > /home/$username/.config/kxkbrc\"
 
 #Авто логин
-su anton -c \"mkdir -p /etc/sddm.conf.d/\"
-su anton -c \"sudo printf '[Autologin]
+mkdir -p /etc/sddm.conf.d/
+printf '[Autologin]
 User=%s
-Session=plasma.desktop' $username > /etc/sddm.conf.d/autologin.conf\"
+Session=plasma.desktop' $username > /etc/sddm.conf.d/autologin.conf
+
+
+
+su anton -c 'mkdir ~/Downloads'
+su anton -c 'cd ~/downloads'
+echo 'Установка AUR (yay)'
+su anton -c 'sudo pacman -Syu'
+su anton -c 'sudo pacman -S wget --noconfirm'
+su anton -c 'wget git.io/yay-install.sh && sh yay-install.sh --noconfirm'
+
+
+
 echo 'Установка завершена '
 read -p 'нажми Enter для перезагрузки'
-exit
- 
+exit 
 "
