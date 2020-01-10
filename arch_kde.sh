@@ -19,7 +19,7 @@ userPass=200583                                    #
 #                       Разбиваю в ручную и  прописываю свою разметку                           #
 #################################################################################################
 echo 'Форматирование дисков'                                                                    #
-mkfs.ext4 -F /dev/sda1 -L root                                                                  #
+#mkfs.ext4 -F /dev/sda1 -L root                                                                  #
 #mkfs.ext4 -F /dev/sda2 -L home                                                                  #
 #mkfs.ext4 -F /dev/sda3 -L data                                                                  #
 echo 'Монтирование дисков'                                                                      #
@@ -32,46 +32,46 @@ mount /dev/sda1 /mnt                                                            
 echo 'Выбор зеркал для загрузки. Ставим зеркало от Яндекс'                                      
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
 echo 'Установка основных пакетов'
-pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd netctl
+#pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd netctl
 echo 'Создаем fstab'
 genfstab -pU /mnt >> /mnt/etc/fstab
-  read -p 'arch-chroot  ГОТОВО нажми Enteк'
+  
 arch-chroot /mnt sh -c "
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname
 ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
-  read -p '  ГОТОВО нажми Enteк'
+ 
 echo 'Добавляем локали системы'
 echo $localname1 > /etc/locale.gen
 echo $localname2 >> /etc/locale.gen
-  read -p '  ГОТОВО нажми Enteк'
+ 
 echo 'Обновим текущую локаль системы'
 locale-gen
-  read -p '  ГОТОВО нажми Enteк'
+
 echo 'Указываем язык системы'
 echo $languageSistem > /etc/locale.conf
-  read -p '  ГОТОВО нажми Enteк'
+
 echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
-  read -p '  ГОТОВО нажми Enteк'
+  
 echo 'Создадим загрузочный RAM диск'
 mkinitcpio -p linux
-  read -p '  ГОТОВО нажми Enteк'
+
 echo 'Устанавливаем загрузчик'
- read -p '  ГОТОВО нажми Enteк'
+
 pacman -Syy
 pacman -S grub --noconfirm
 grub-install /dev/sda
  
 echo 'Обновляем grub.cfg'
- read -p '  ГОТОВО нажми Enteк'
+
 grub-mkconfig -o /boot/grub/grub.cfg
  
  
 echo 'Ставим программу для Wi-fi'
- read -p '  ГОТОВО нажми Enteк'
-pacman -S dialog wpa_supplicant --noconfirm
+
+#pacman -S dialog wpa_supplicant --noconfirm
  
 echo 'Добавляем пользователя'
 useradd -m -g users -G wheel -s /bin/bash $username
@@ -92,14 +92,14 @@ echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syy
  
 echo 'Ставим иксы и драйвера'
-pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
+#pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
 echo 'KDE ставим'
-pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk sddm sddm-kcm --noconfirm
+#pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk sddm sddm-kcm --noconfirm
 echo 'Ставим шрифты'
-pacman -S ttf-liberation ttf-dejavu --noconfirm
+#pacman -S ttf-liberation ttf-dejavu --noconfirm
  
 echo 'Ставим сеть'
-pacman -S networkmanager network-manager-applet ppp --noconfirm
+#pacman -S networkmanager network-manager-applet ppp --noconfirm
 echo 'Подключаем автозагрузку менеджера входа и интернет'
 systemctl enable sddm
 systemctl enable NetworkManager
@@ -113,6 +113,7 @@ read -p 'НАСТРОЙКА СИСТЕМЫ enter'
 #            Настройка системы                     #
 ####################################################
 #Добавляю русский язык и смену раскладки alt->shift
+su anton -c \"mkdir -p /home/$username/.config/\"
 su anton -c \"echo '[Layout]
 DisplayNames=,
 LayoutList=us,ru
@@ -126,8 +127,9 @@ ShowLayoutIndicator=true
 ShowSingle=false
 SwitchMode=Global
 Use=true' > /home/$username/.config/kxkbrc\"
+
 #Авто логин
-su anton -c \"sudo mkdir -p /etc/sddm.conf.d/\"
+su anton -c \"mkdir -p /etc/sddm.conf.d/\"
 su anton -c \"sudo printf '[Autologin]
 User=%s
 Session=plasma.desktop' $username > /etc/sddm.conf.d/autologin.conf\"
