@@ -20,14 +20,14 @@ userPass=200583                                    #
 #################################################################################################
 echo 'Форматирование дисков'                                                                    #
 mkfs.ext4 -F /dev/sda1 -L root                                                                  #
-mkfs.ext4 -F /dev/sda2 -L home                                                                  #
-mkfs.ext4 -F /dev/sda3 -L data                                                                  #
+#mkfs.ext4 -F /dev/sda2 -L home                                                                  #
+#mkfs.ext4 -F /dev/sda3 -L data                                                                  #
 echo 'Монтирование дисков'                                                                      #
 mount /dev/sda1 /mnt                                                                            #
-mkdir /mnt/home                                                                                 #
-mount /dev/sda2 /mnt/home                                                                       #
-mkdir /mnt/date                                                                                 #
-mount /dev/sda3 /mnt/date                                                                       #
+#mkdir /mnt/home                                                                                 #
+#mount /dev/sda2 /mnt/home                                                                       #
+#mkdir /mnt/date                                                                                 #
+#mount /dev/sda3 /mnt/date                                                                       #
 #################################################################################################
 echo 'Выбор зеркал для загрузки. Ставим зеркало от Яндекс'                                      
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
