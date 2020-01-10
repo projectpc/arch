@@ -40,34 +40,74 @@ arch-chroot /mnt sh -c "
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname
 ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Добавляем локали системы'
 echo $localname1 > /etc/locale.gen
 echo $localname2 >> /etc/locale.gen
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Обновим текущую локаль системы'
 locale-gen
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Указываем язык системы'
 echo $languageSistem > /etc/locale.conf
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Создадим загрузочный RAM диск'
 mkinitcpio -p linux
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Устанавливаем загрузчик'
+ read -p '  ГОТОВО нажми Enteк'
 pacman -Syy
 pacman -S grub --noconfirm
 grub-install /dev/sda
  
 echo 'Обновляем grub.cfg'
+ read -p '  ГОТОВО нажми Enteк'
 grub-mkconfig -o /boot/grub/grub.cfg
  
  
 echo 'Ставим программу для Wi-fi'
+ read -p '  ГОТОВО нажми Enteк'
 pacman -S dialog wpa_supplicant --noconfirm
+ 
+echo 'Добавляем пользователя'
+useradd -m -g users -G wheel -s /bin/bash $username
+echo $username:$userPass | chpasswd
+ 
+echo 'Создаем root пароль'
+echo root:$rootPass | chpasswd
+echo 'Устанавливаем SUDO'
+echo groupadd sudo
+echo usermod -a -G sudo $username
+echo '%wheel ALL=(ALL) ALL' >> /etc/sudoers
+echo '%sudo ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
+echo '$username ALL=(ALL:ALL) NOPASSWD: ALL' >> /etc/sudoers
+ 
+echo 'Раскомментируем репозиторий multilib Для работы 32-битных приложений в 64-битной системе.'
+echo '[multilib]' >> /etc/pacman.conf
+echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
+pacman -Syy
+ 
+echo 'Ставим иксы и драйвера'
+pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
+echo 'KDE ставим'
+pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk sddm sddm-kcm --noconfirm
+echo 'Ставим шрифты'
+pacman -S ttf-liberation ttf-dejavu --noconfirm
+ 
+echo 'Ставим сеть'
+pacman -S networkmanager network-manager-applet ppp --noconfirm
+echo 'Подключаем автозагрузку менеджера входа и интернет'
+systemctl enable sddm
+systemctl enable NetworkManager
+#####pacman -S gimp  mousepad
+read -p 'ДАЛЬШЕ РАБОТАЕМ ОТ ПОЛЬЗОВАТЕЛЯ   su anton -c нажми Enter'
+#####su anton -c 'sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth --noconfirm'
+#####su anton -c 'sudo systemctl enable bluetooth'
+#####su anton -c 'sudo pacman -S gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mtpfs thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman udiskie udisks2 chromium'
+read -p 'НАСТРОЙКА СИСТЕМЫ enter'
  
 "
