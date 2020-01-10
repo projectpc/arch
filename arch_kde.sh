@@ -103,8 +103,8 @@ pacman -S networkmanager network-manager-applet ppp --noconfirm
 echo 'Подключаем автозагрузку менеджера входа и интернет'
 
 
-su anton -c 'sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth gimp  mousepad chromium vlc --noconfirm'
-su anton -c 'sudo pacman -S f2fs-tools dosfstools ntfs-3g p7zip unrar gvfs ark thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman --noconfirm'
+su $username -c 'sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth gimp  mousepad chromium vlc --noconfirm'
+su $username -c 'sudo pacman -S f2fs-tools dosfstools ntfs-3g p7zip unrar gvfs ark thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman --noconfirm'
 
 systemctl enable sddm
 systemctl enable NetworkManager
@@ -113,8 +113,8 @@ systemctl enable bluetooth
 #            Настройка системы                     #
 ####################################################
 #Добавляю русский язык и смену раскладки alt->shift
-su anton -c \"mkdir -p /home/$username/.config/\"
-su anton -c \"echo '[Layout]
+su $username -c \"mkdir -p /home/$username/.config/\"
+su $username -c \"echo '[Layout]
 DisplayNames=,
 LayoutList=us,ru
 LayoutLoopCount=-1
@@ -136,12 +136,12 @@ Session=plasma.desktop' $username > /etc/sddm.conf.d/autologin.conf
 
 
 
-su anton -c 'mkdir ~/Downloads'
-su anton -c 'cd ~/downloads'
+su $username -c 'mkdir ~/Downloads'
+su $username -c 'cd ~/downloads'
 echo 'Установка AUR (yay)'
-su anton -c 'sudo pacman -Syu'
-su anton -c 'sudo pacman -S wget --noconfirm'
-su anton -c 'wget git.io/yay-install.sh && sh yay-install.sh --noconfirm'
+su $username -c 'sudo pacman -Syu'
+su $username -c 'sudo pacman -S wget --noconfirm'
+su $username -c 'wget git.io/yay-install.sh && sh yay-install.sh --noconfirm'
 
 
 
