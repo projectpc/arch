@@ -109,5 +109,30 @@ read -p 'ДАЛЬШЕ РАБОТАЕМ ОТ ПОЛЬЗОВАТЕЛЯ   su anton 
 #####su anton -c 'sudo systemctl enable bluetooth'
 #####su anton -c 'sudo pacman -S gvfs gvfs-afc gvfs-gphoto2 gvfs-mtp gvfs-nfs gvfs-smb mtpfs thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman udiskie udisks2 chromium'
 read -p 'НАСТРОЙКА СИСТЕМЫ enter'
+####################################################
+#            Настройка системы                     #
+####################################################
+#Добавляю русский язык и смену раскладки alt->shift
+su anton -c \"echo '[Layout]
+DisplayNames=,
+LayoutList=us,ru
+LayoutLoopCount=-1
+Model=pc101
+Options=grp:alt_shift_toggle
+ResetOldOptions=true
+ShowFlag=true
+ShowLabel=true
+ShowLayoutIndicator=true
+ShowSingle=false
+SwitchMode=Global
+Use=true' > /home/$username/.config/kxkbrc\"
+#Авто логин
+su anton -c \"sudo mkdir -p /etc/sddm.conf.d/\"
+su anton -c \"sudo printf '[Autologin]
+User=%s
+Session=plasma.desktop' $username > /etc/sddm.conf.d/autologin.conf\"
+echo 'Установка завершена '
+read -p 'нажми Enter для перезагрузки'
+exit
  
 "
