@@ -141,7 +141,8 @@ echo 'Установка AUR (yay)'
 su $username -c 'sudo pacman -Syu --noconfirm'
 su $username -c 'sudo pacman -S wget --noconfirm'
 su $username -c 'wget git.io/yay-install.sh ' 
-su $username -c 'sh ./yay-install.sh' 
+chmod 777 ./yay-install.sh
+su $username -c 'sh ./yay-install.sh --noconfirm' 
 
 echo 'Установка завершена '
 read -p 'нажми Enter для перезагрузки'
