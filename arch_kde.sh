@@ -6,7 +6,7 @@ timedatectl set-ntp true
 ####################################################
 #            установка переменных                  #
 ####################################################
-hostname="Arch"                                    #
+hostname="arch"                                    #
 username="anton"                                   #
 localname1="ru_RU.UTF-8 UTF-8"                     #
 localname2="en_US.UTF-8 UTF-8"                     #
@@ -31,47 +31,46 @@ mount /dev/sda1 /mnt                                                            
 #################################################################################################
 echo 'Выбор зеркал для загрузки. Ставим зеркало от Яндекс'                                      
 echo "Server = http://mirror.yandex.ru/archlinux/\$repo/os/\$arch" > /etc/pacman.d/mirrorlist
-read -p 'Установка основных пакетов нажми Enteк' 
 echo 'Установка основных пакетов'
 pacstrap /mnt base base-devel linux linux-firmware nano dhcpcd netctl
- read -p 'Установка основных пакетов ГОТОВО  -----   нажми Enteк'
 echo 'Создаем fstab'
- read -p 'Создаем fstab нажми Enteк'
 genfstab -pU /mnt >> /mnt/etc/fstab
- read -p 'Создаем fstab  ГОТОВО нажми Enteк'
   read -p 'arch-chroot  ГОТОВО нажми Enteк'
 arch-chroot /mnt sh -c "
 echo 'Прописываем имя компьютера'
 echo $hostname > /etc/hostname
 ln -svf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Добавляем локали системы'
 echo $localname1 > /etc/locale.gen
 echo $localname2 >> /etc/locale.gen
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Обновим текущую локаль системы'
 locale-gen
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Указываем язык системы'
 echo $languageSistem > /etc/locale.conf
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Вписываем KEYMAP=ru FONT=cyr-sun16'
 echo 'KEYMAP=ru' >> /etc/vconsole.conf
 echo 'FONT=cyr-sun16' >> /etc/vconsole.conf
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Создадим загрузочный RAM диск'
 mkinitcpio -p linux
- 
+  read -p '  ГОТОВО нажми Enteк'
 echo 'Устанавливаем загрузчик'
+ read -p '  ГОТОВО нажми Enteк'
 pacman -Syy
 pacman -S grub --noconfirm
 grub-install /dev/sda
  
 echo 'Обновляем grub.cfg'
+ read -p '  ГОТОВО нажми Enteк'
 grub-mkconfig -o /boot/grub/grub.cfg
  
  
 echo 'Ставим программу для Wi-fi'
+ read -p '  ГОТОВО нажми Enteк'
 pacman -S dialog wpa_supplicant --noconfirm
  
 echo 'Добавляем пользователя'
