@@ -96,7 +96,7 @@ pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
 echo 'KDE ставим'
 pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk  packagekit-qt5  kwalletmanager sddm sddm-kcm --noconfirm
 echo 'Ставим шрифты'
-#pacman -S ttf-liberation ttf-dejavu --noconfirm
+pacman -S ttf-liberation ttf-dejavu --noconfirm
  
 echo 'Ставим сеть'
 pacman -S networkmanager network-manager-applet ppp --noconfirm
@@ -134,16 +134,14 @@ printf '[Autologin]
 User=%s
 Session=plasma.desktop' $username > /etc/sddm.conf.d/autologin.conf
 
-
-
+#установка yay
 su $username -c 'mkdir ~/Downloads'
-su $username -c 'cd ~/downloads'
+su $username -c 'cd ~/Downloads'
 echo 'Установка AUR (yay)'
-su $username -c 'sudo pacman -Syu'
+su $username -c 'sudo pacman -Syu --noconfirm'
 su $username -c 'sudo pacman -S wget --noconfirm'
-su $username -c 'wget git.io/yay-install.sh && sh yay-install.sh --noconfirm'
-
-
+su $username -c 'wget git.io/yay-install.sh ' 
+su $username -c 'sh ./yay-install.sh' 
 
 echo 'Установка завершена '
 read -p 'нажми Enter для перезагрузки'
