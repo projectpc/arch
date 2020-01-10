@@ -124,7 +124,7 @@ ResetOldOptions=true
 ShowFlag=true
 ShowLabel=false
 ShowLayoutIndicator=true
-ShowSingle=true
+ShowSingle=false
 SwitchMode=Global
 Use=true' > /home/$username/.config/kxkbrc\"
 
