@@ -18,12 +18,23 @@ userPass=200583                                    #
 #################################################################################################
 #                       Разбиваю в ручную и  прописываю свою разметку                           #
 #################################################################################################
-echo 'Форматирование дисков'                                                                    #
-mkfs.ext4 -F /dev/sda1 -L root                                                                  #
+echo 'Форматирование дисков'        
+mkfs.btrfs -f /dev/sda1  -L Arch_Linux
+mount /dev/sda1 /mnt
+btrfs subvolume create /mnt/sv_root
+btrfs subvolume create /mnt/sv_home
+btrfs subvolume create /mnt/sv_snapshots
+umount /mnt
+mount -o subvol=sv_root,compress=lzo,autodefrag /dev/sda1 /mnt
+mkdir /mnt/home
+mount -o subvol=sv_home,compress=lzo,autodefrag /dev/sda1 /mnt/home
+mkdir /mnt/snapshots
+mount -o subvol=sv_snapshots,compress=lzo,autodefrag /dev/sda1 /mnt/snapshots
+#mkfs.ext4 -F /dev/sda1 -L root                                                                  #
 #mkfs.ext4 -F /dev/sda2 -L home                                                                  #
 #mkfs.ext4 -F /dev/sda3 -L data                                                                  #
 echo 'Монтирование дисков'                                                                      #
-mount /dev/sda1 /mnt                                                                            #
+#mount /dev/sda1 /mnt                                                                            #
 #mkdir /mnt/home                                                                                 #
 #mount /dev/sda2 /mnt/home                                                                       #
 #mkdir /mnt/date                                                                                 #
@@ -103,7 +114,7 @@ pacman -S networkmanager network-manager-applet ppp --noconfirm
 echo 'Подключаем автозагрузку менеджера входа и интернет'
 
 
-su $username -c 'sudo pacman -Sy blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth gimp  mousepad chromium vlc --noconfirm'
+su $username -c 'sudo pacman -Sy kdeconnect blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth gimp  gedit chromium smplayer --noconfirm'
 su $username -c 'sudo pacman -S f2fs-tools dosfstools ntfs-3g p7zip unrar gvfs ark thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman --noconfirm'
 
 systemctl enable sddm
