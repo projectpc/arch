@@ -18,12 +18,7 @@ userPass=200583                                    #
 #################################################################################################
 #                       Разбиваю в ручную и  прописываю свою разметку                           #
 #################################################################################################
-echo 'Форматирование дисков'        
-mount -o subvol=sv_root,compress=lzo,autodefrag /dev/sda1 /mnt
-mkdir /mnt/home
-mount -o subvol=sv_home,compress=lzo,autodefrag /dev/sda1 /mnt/home
-mkdir /mnt/snapshots
-mount -o subvol=sv_snapshots,compress=lzo,autodefrag /dev/sda1 /mnt/snapshots
+
 mkfs.ext4 -F /dev/sda1 -L Root                                                                  #
 mkfs.ext4 -F /dev/sda2 -L Home                                                                  #
 #mkfs.ext4 -F /dev/sda3 -L data                                                                  #
