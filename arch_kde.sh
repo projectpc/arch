@@ -97,7 +97,7 @@ echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syy
  
 echo 'Ставим иксы и драйвера'
-pacman -S xorg-server xorg-drivers xorg-xinit --noconfirm
+pacman -S xorg-server xorg-drivers xorg-xinit xf86-video-intel libva-intel-driver  libva --noconfirm
 echo 'KDE ставим'
 pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk  packagekit-qt5  kwalletmanager sddm sddm-kcm --noconfirm
 echo 'Ставим шрифты'
