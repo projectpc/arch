@@ -19,24 +19,18 @@ userPass=200583                                    #
 #                       Разбиваю в ручную и  прописываю свою разметку                           #
 #################################################################################################
 echo 'Форматирование дисков'        
-mkfs.btrfs -f /dev/sda1  -L Arch_Linux
-mount /dev/sda1 /mnt
-btrfs subvolume create /mnt/sv_root
-btrfs subvolume create /mnt/sv_home
-btrfs subvolume create /mnt/sv_snapshots
-umount /mnt
 mount -o subvol=sv_root,compress=lzo,autodefrag /dev/sda1 /mnt
 mkdir /mnt/home
 mount -o subvol=sv_home,compress=lzo,autodefrag /dev/sda1 /mnt/home
 mkdir /mnt/snapshots
 mount -o subvol=sv_snapshots,compress=lzo,autodefrag /dev/sda1 /mnt/snapshots
-#mkfs.ext4 -F /dev/sda1 -L root                                                                  #
-#mkfs.ext4 -F /dev/sda2 -L home                                                                  #
+mkfs.ext4 -F /dev/sda1 -L Root                                                                  #
+mkfs.ext4 -F /dev/sda2 -L Home                                                                  #
 #mkfs.ext4 -F /dev/sda3 -L data                                                                  #
 echo 'Монтирование дисков'                                                                      #
-#mount /dev/sda1 /mnt                                                                            #
-#mkdir /mnt/home                                                                                 #
-#mount /dev/sda2 /mnt/home                                                                       #
+mount /dev/sda1 /mnt                                                                            #
+mkdir /mnt/home                                                                                 #
+mount /dev/sda2 /mnt/home                                                                       #
 #mkdir /mnt/date                                                                                 #
 #mount /dev/sda3 /mnt/date                                                                       #
 #################################################################################################
