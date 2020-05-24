@@ -19,13 +19,15 @@ userPass=200583                                    #
 #                       Разбиваю в ручную и  прописываю свою разметку                           #
 #################################################################################################
 
-mkfs.ext4 -F /dev/sda1 -L Root                                                                  #
-mkfs.ext4 -F /dev/sda2 -L Home                                                                  #
+mkfs.ext4 -F /dev/nvme0n1p4 -L Root                                                                  #
+mkfs.ext4 -F /dev/nvme0n1p6 -L Home          
+mkswap /dev/nvme0n1p5
+swapon /dev/nvme0n1p5
 #mkfs.ext4 -F /dev/sda3 -L data                                                                  #
 echo 'Монтирование дисков'                                                                      #
-mount /dev/sda1 /mnt                                                                            #
+mount /dev/nvme0n1p4 /mnt                                                                            #
 mkdir /mnt/home                                                                                 #
-mount /dev/sda2 /mnt/home                                                                       #
+mount /dev/nvme0n1p6 /mnt/home                                                                       #
 #mkdir /mnt/date                                                                                 #
 #mount /dev/sda3 /mnt/date                                                                       #
 #################################################################################################
@@ -61,12 +63,13 @@ mkinitcpio -p linux
 echo 'Устанавливаем загрузчик'
 
 pacman -Syy
-pacman -S grub --noconfirm
-grub-install /dev/sda
+#pacman -S grub --noconfirm
+#grub-install /dev/sda
+pacman -S refind-install
  
 echo 'Обновляем grub.cfg'
 
-grub-mkconfig -o /boot/grub/grub.cfg
+#grub-mkconfig -o /boot/grub/grub.cfg
  
  
 echo 'Ставим программу для Wi-fi'
@@ -92,9 +95,9 @@ echo 'Include = /etc/pacman.d/mirrorlist' >> /etc/pacman.conf
 pacman -Syy
  
 echo 'Ставим иксы и драйвера'
-pacman -S xorg-server xorg-drivers xorg-xinit xf86-video-intel libva-intel-driver  libva --noconfirm
+pacman -S xorg-server xorg-drivers xorg-xinit  libva-intel-driver  libva amd-ucode lib32-mesa  xf86-video-amdgpu  vulkan-radeon lib32-vulkan-radeon libva-mesa-driver  lib32-libva-mesa-driver  mesa-vdpau  lib32-mesa-vdpau mesa
 echo 'KDE ставим'
-pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk  packagekit-qt5  kwalletmanager sddm sddm-kcm --noconfirm
+pacman -Sy plasma-meta kdebase kde-gtk-config breeze-gtk  packagekit-qt5  kwalletmanager # sddm sddm-kcm --noconfirm
 echo 'Ставим шрифты'
 pacman -S ttf-liberation ttf-dejavu --noconfirm
  
@@ -106,7 +109,7 @@ echo 'Подключаем автозагрузку менеджера вход�
 su $username -c 'sudo pacman -Sy kdeconnect blueberry bluez bluez-libs bluez-utils pulseaudio-bluetooth gimp  gedit chromium smplayer --noconfirm'
 su $username -c 'sudo pacman -S f2fs-tools dosfstools ntfs-3g p7zip unrar gvfs ark thunar thunar-archive-plugin thunar-media-tags-plugin thunar-volman --noconfirm'
 
-systemctl enable sddm
+#systemctl enable sddm
 systemctl enable NetworkManager
 systemctl enable bluetooth
 ####################################################
