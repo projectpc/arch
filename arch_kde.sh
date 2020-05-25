@@ -70,6 +70,7 @@ pacman -Syy
 #pacman -S refind
 #refind-install
 echo 'Обновляем grub.cfg'
+pacman -S efibootmgr
 bootctl install
 
 #grub-mkconfig -o /boot/grub/grub.cfg
