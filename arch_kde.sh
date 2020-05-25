@@ -21,7 +21,7 @@ userPass=200583                                    #
 
 #mkfs.ext4 -F /dev/nvme0n1p4 -L Root                                                                  #
 #mkfs.ext4 -F /dev/nvme0n1p6 -L Home          
-
+mkfs.ext2 -F /dev/nvme0n1p1 -L Boot 
 #mkfs.ext4 -F /dev/sda3 -L data                                                                  #
 echo 'Монтирование дисков'                                                                      #
 mount /dev/nvme0n1p2 /mnt                                                                            #
