@@ -24,10 +24,12 @@ userPass=200583                                    #
 mkfs.ext2 -F /dev/nvme0n1p1 -L Boot 
 #mkfs.ext4 -F /dev/sda3 -L data                                                                  #
 echo 'Монтирование дисков'                                                                      #
-mount /dev/nvme0n1p2 /mnt                                                                            #
+mount /dev/nvme0n1p2 /mnt    
+mkdir /mnt/home
+mkdir -p /mnt/boot/efi
 #mkdir /mnt/home                                                                                 #
 mount /dev/nvme0n1p3 /mnt/home    
-mount /dev/nvme0n1p1 /mnt/boot
+mount /dev/nvme0n1p1 /mnt/boot/efi
 mkswap /dev/nvme0n1p4
 swapon /dev/nvme0n1p4
 #mkdir /mnt/date                                                                                 #
@@ -73,8 +75,9 @@ echo 'Обновляем grub.cfg'
 echo '3.5 Устанавливаем загрузчик'
 pacman -Syy
 pacman -S grub efibootmgr --noconfirm 
-grub-install /dev/sda
-
+grub-install /dev/nvme0n1p1
+echo 'Обновляем grub.cfg'
+grub-mkconfig -o /boot/grub/grub.cfg
 #grub-mkconfig -o /boot/grub/grub.cfg
  
  
