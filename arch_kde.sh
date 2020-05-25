@@ -67,9 +67,10 @@ echo 'Устанавливаем загрузчик'
 pacman -Syy
 #pacman -S grub --noconfirm
 #grub-install /dev/sda
-pacman -S refind
-refind-install
+#pacman -S refind
+#refind-install
 echo 'Обновляем grub.cfg'
+bootctl install
 
 #grub-mkconfig -o /boot/grub/grub.cfg
  
