@@ -14,7 +14,32 @@ languageSistem='LANG="ru_RU.UTF-8"'                #
 rootPass=200583                                    #
 userPass=200583                                    #
 ####################################################
+#################################################################################################
+#                       Разбиваю в ручную и  прописываю свою разметку                           #
+#################################################################################################
 
+
+# 3 раздела nvme0n1p1=100 nvme0n1p2=300 и все оставшееся место nvme0n1p3
+mkfs.fat -F32 /dev/nvme0n1p1
+mkfs.ext4     /dev/nvme0n1p2
+mkfs.btrfs -L "arch" /dev/nvme0n1p2
+mount /dev/nvme0n1p3 /mnt
+cd /mnt
+btrfs su cr @
+btrfs su cr @home
+cd
+umount /mnt
+
+mount -o noatime,compress=zsd:2,space_cache=v2,discard=async,subvol=@ /dev/nvme0n1p3 /mnt
+mkdir /mnt/{boot,home}
+mount -o noatime,compress=zsd:2,space_cache=v2,discard=async,subvol=@ /dev/nvme0n1p3 /mnt/home
+mount /dev/nvme0n1p2 /mnt/boot
+
+mkdir /boot/efi
+mount /dev/nvme0n1p1 /boot/efi/
+
+grub-install --efi-directory=/boot/efi/                                                                     #
+#################################################################################################
 #################################################################################################
 #                       Разбиваю в ручную и  прописываю свою разметку                           #
 #################################################################################################
